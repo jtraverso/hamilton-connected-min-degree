@@ -1,0 +1,14 @@
+{
+  "challenge_module": "HamConnChallenge",
+  "solution_module": "HamConnSolution",
+  "theorem_names": [
+    "HamConn.hamiltonConnected_of_minDegree"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

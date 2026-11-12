@@ -1,0 +1,29 @@
+name = "hamilton_connected"
+version = "0.1.0"
+defaultTargets = ["HamConn", "HamConnChallenge", "HamConnSolution"]
+requiresModuleSystem = true
+
+[leanOptions]
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.35.0-rc3"
+
+[[require]]
+name = "menger_hamilton"
+git = "https://github.com/jtraverso/menger-hamiltonian"
+rev = "35c5f684f9bfbd244bd0999ce725623ab571adb6"
+
+[[lean_lib]]
+name = "HamConn"
+globs = ["HamConn.+"]
+
+[[lean_lib]]
+name = "HamConnChallenge"
+roots = ["HamConnChallenge"]
+
+[[lean_lib]]
+name = "HamConnSolution"
+roots = ["HamConnSolution"]

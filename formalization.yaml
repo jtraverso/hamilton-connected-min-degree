@@ -1,0 +1,115 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Hamilton-connectedness of graphs with large minimum degree"
+  description: >-
+    A Lean 4 / Mathlib proof that a finite simple graph on n ≥ 5 vertices with minimum degree at
+    least n/2 + 1 (n + 2 ≤ 2δ) is Hamilton-connected: for any two distinct vertices u, v there is a
+    Hamiltonian path (Mathlib's Walk.IsHamiltonian) from u to v
+    (HamConn.hamiltonConnected_of_minDegree). Proof: Dirac's theorem (registered in
+    PALOMAR-2026-10-15-000020) gives a Hamiltonian cycle c₀ … c_{m−1} of G − u − v; u and v have
+    together more than m neighbours on it, so some i has u ~ cᵢ and v ~ c_{i+1}, and
+    u cᵢ c_{i−1} … c_{i+1} v is a Hamiltonian path. The bound is one above Ore's sharp condition
+    (σ₂ ≥ n + 1, i.e. δ ≥ (n+1)/2) for odd n and equal to it for even n. No definitions beyond
+    Mathlib's. A building block for Plantholt–Shan's linear-forest lemma.
+  authors:
+    - "Juan Pablo Traverso Gianini"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Juan Pablo Traverso Gianini"
+
+classification:
+  arxiv: ["math.CO"]
+  msc2020: ["05C45"]
+
+repository:
+  role: "substantive-development"
+
+sources:
+  - title: "Hamilton connected graphs"
+    authors:
+      - "Øystein Ore"
+    type: "paper"
+    location: "Journal de Mathématiques Pures et Appliquées 42 (1963), 21–27."
+    relationship: "background"
+    note: >-
+      Ore's sharp theorem (σ₂ ≥ n + 1 implies Hamilton-connected); the statement formalized here is
+      the weaker minimum-degree form with δ ≥ n/2 + 1, proved directly from Dirac's theorem. Cited
+      as Theorem 2.6 (second part) by Plantholt and Shan (arXiv:2105.05286).
+    license: "all rights reserved"
+    author_endorsement: "not-contacted"
+  - title: "Some theorems on abstract graphs"
+    authors:
+      - "G. A. Dirac"
+    id: "doi:10.1112/plms/s3-2.1.69"
+    type: "paper"
+    location: "Proceedings of the London Mathematical Society (3) 2 (1952), 69–81."
+    relationship: "background"
+    note: "Dirac's theorem, used through the registered formalization."
+    license: "all rights reserved"
+    author_endorsement: "not-contacted"
+  - title: "Hamilton-connectedness from a Hamiltonian cycle of G − u − v"
+    authors:
+      - "folklore"
+    type: "folklore"
+    location: "Standard pigeonhole argument."
+    relationship: "formalizes"
+    note: "The statement of this package."
+    license: "unknown"
+    author_endorsement: "n/a"
+
+related_formalizations:
+  - id: "PALOMAR-2026-10-15-000020 v2 (jtraverso/menger-hamiltonian @ 35c5f68)"
+    relationship: "builds-on"
+    note: >-
+      Pinned dependency: Hamiltonicity.dirac, Hamiltonicity.exists_cycArr_of_isHamiltonian,
+      Hamiltonicity.walkOf and its support lemma.
+
+status:
+  scope: "One statement: Hamilton-connectedness for n ≥ 5 and δ ≥ n/2 + 1. Ore's sharp form is not covered."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude Opus 5.5"]
+      framework: "Claude Code (Anthropic)"
+      tool_setup: >-
+        Wrote the library (HamConn/Basic.lean), the Challenge/Solution pair and the packaging under
+        the author's direction. Checked with a local build against the pinned dependency, #print
+        axioms and a comparison of the elaborated Challenge and Solution statements (pp.all) (Lean
+        v4.35.0-rc3, Mathlib c55e6e786f49471c72fbddbec5415808896aec1e).
+      cost:
+        wall_time: "about an hour"
+        spend_usd: "subscription-based"
+        hardware: "local machine"
+      prompting_notes: "Natural-language instructions in Spanish, directed by the author."
+  spend_usd: "subscription-based"
+  notes: >-
+    The Lean development is AI-written under the author's direction and mechanically verified: no
+    sorry, axioms limited to propext, Classical.choice and Quot.sound, identical elaborated
+    statements in the Challenge and the Solution.
+
+fidelity:
+  divergences: >-
+    Hamilton-connected is stated pointwise (for every u ≠ v there is a Hamiltonian u–v walk); the
+    hypothesis n ≥ 5 excludes only the complete graph K₄ among graphs with n + 2 ≤ 2δ.
+
+review:
+  status: "agent-reviewed"
+  reviewers:
+    - "Claude Opus 5.5 (AI agent in Claude Code, acting for the author)"
+  notes: >-
+    Agent review by Claude Opus 5.5. Smallest case: n = 5 forces δ = 4 (K₅). No independent human
+    review has been performed. No novelty is claimed.
+
+alignment:
+  namespace: "HamConn"
+  statements:
+    - {source: "Dirac/Ore-type Hamilton-connectedness (δ ≥ n/2 + 1)", lean: "HamConn.hamiltonConnected_of_minDegree", module: "HamConnChallenge", status: "proved"}
+
+acknowledgements: >-
+  Mathlib and the Lean community.
